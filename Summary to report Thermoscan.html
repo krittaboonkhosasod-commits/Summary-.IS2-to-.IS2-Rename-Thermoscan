@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THERMIFY PRO – เปลี่ยนชื่อไฟล์ IS2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f1722;--mute:#6b7280;--line:#e3e7ee;--acc:#2f6df6;--accink:#fff;--ok:#168a4a;--bad:#c62828;--warn:#b45f06;--field:#f2f4f8}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;color:var(--ink);font:15px/1.5 "Prompt","Noto Sans Thai","Sarabun","Leelawadee UI",Tahoma,sans-serif;
+  background:
+    radial-gradient(60% 45% at 8% 100%,#c6f1d6 0%,rgba(198,241,214,0) 70%),
+    radial-gradient(55% 45% at 85% 95%,#f8d3ea 0%,rgba(248,211,234,0) 70%),
+    radial-gradient(50% 40% at 100% 5%,#eadff8 0%,rgba(234,223,248,0) 70%),
+    linear-gradient(180deg,#eef2ff,#f0eefb);
+  background-attachment:fixed}
+.brand{position:absolute;top:10px;left:12px;display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.02em}
+.brand small{font-weight:500;color:var(--mute);font-size:1em}
+.foot{position:fixed;right:16px;bottom:10px;font-size:11px;letter-spacing:.16em;color:#b9bec9;pointer-events:none}
+.shell{max-width:1000px;margin:56px auto 56px;padding:0 14px}
+.card{position:relative;border-radius:28px;padding:16px 16px 16px;background:linear-gradient(135deg,#c4e2fb 0%,#cbd5fb 100%);box-shadow:0 10px 30px rgba(120,140,220,.25)}
+.card h1{margin:0 0 6px 4px;font-size:1.35rem;font-weight:700;line-height:1.3}
+.cam{position:absolute;right:22px;top:10px}
+.tabs{display:flex;gap:2px;margin-top:6px;border-radius:22px 22px 0 0;background:rgba(255,255,255,.35);padding:0 0 0 0;overflow-x:auto}
+.tab{appearance:none;border:0;background:transparent;font:inherit;font-weight:500;color:#40506a;padding:10px 18px;border-radius:20px 20px 0 0;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{background:#fff;color:var(--ink);font-weight:600}
+.tab:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.sheet{background:#fff;border-radius:24px;padding:14px 12px 16px;min-height:240px}
+.sheet[data-tab="0"]{border-top-left-radius:0}
+.pane[hidden]{display:none}
+.flow{display:flex;justify-content:flex-end;align-items:flex-start;gap:6px;padding:0 6px 8px}
+.flow .to{display:flex;flex-direction:column;align-items:center;font-size:9px;letter-spacing:.3em;color:#8a8f9a;margin-top:2px}
+.drop{border:1.5px dashed #c4c8d0;border-radius:24px;background:#ebebed;padding:36px 16px;text-align:center;cursor:pointer;transition:background .15s,border-color .15s}
+.drop:hover,.drop.over,.drop:focus-visible{background:#e4e9f7;border-color:var(--acc);outline:none}
+.drop .big{display:block;font-weight:600;font-size:.95rem;margin-top:8px}
+.drop .small{display:block;color:#8a8f9a;font-size:.72rem;margin-top:2px}
+.info{margin-top:10px;color:var(--mute);font-size:.88rem;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:12px}
+label{display:block;font-size:.82rem;color:var(--mute)}
+input[type=text],input:not([type]),select{width:100%;margin-top:3px;padding:8px 12px;border:1px solid transparent;border-radius:12px;background:var(--field);color:var(--ink);font:inherit}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.tbl{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:620px;table-layout:fixed}
+th:first-child,td:first-child{width:3.8em}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);overflow-wrap:anywhere;font-size:.88rem}
+th:nth-child(2),td:nth-child(2){width:36%}
+th{font-weight:600;color:var(--mute);font-size:.8rem;position:sticky;top:0;background:#f7f8fb}
+td.new{font-weight:600}
+td.bad,td.miss{color:var(--bad)}
+td.miss{font-weight:400}
+td.dup{color:var(--warn);font-weight:600}
+td.keep{color:var(--mute)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+button.b{padding:9px 18px;border-radius:999px;border:1px solid var(--acc);background:var(--acc);color:var(--accink);font:inherit;font-weight:500;cursor:pointer}
+button.b.alt{background:#fff;color:var(--acc)}
+button.b:disabled{opacity:.4;cursor:not-allowed}
+#msg{color:var(--mute);min-height:1.5em;margin-top:10px;font-size:.9rem}
+#msg.bad{color:var(--bad)}#msg.ok{color:var(--ok)}
+details{margin-bottom:12px}
+summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
+@media (max-width:640px){.shell{margin-top:50px}.cam{transform:scale(.75);transform-origin:top right;right:14px}.card h1{font-size:1.1rem;max-width:70%}.tab{padding:9px 12px;font-size:.9rem}}
+</style>
+</head>
+<body>
+<div class="brand" aria-label="THERMIFY PRO">
+  <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#6f8ba3"/><rect x="5" y="7" width="15" height="11" rx="4" fill="#33475b"/><circle cx="11" cy="12.5" r="3.6" fill="#0e2a3a" stroke="#4fd1e0" stroke-width="1.4"/><rect x="21" y="12" width="3" height="8" rx="1.5" fill="#33475b"/></svg>
+  <span>THERMIFY <small>PRO</small></span>
+</div>
+<div class="foot">THE END DX TCD.</div>
+
+<div class="shell">
+<div class="card">
+  <h1>Summary to report</h1>
+  <svg class="cam" width="66" height="72" viewBox="0 0 66 72" aria-hidden="true">
+    <defs><linearGradient id="cb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b7584"/><stop offset="1" stop-color="#454e5c"/></linearGradient>
+    <linearGradient id="cr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#fb7185"/></linearGradient></defs>
+    <rect x="25" y="36" width="15" height="30" rx="6" fill="#4b5563"/>
+    <rect x="2" y="2" width="62" height="42" rx="12" fill="url(#cb)"/>
+    <circle cx="23" cy="23" r="15" fill="#0e2a3a" stroke="#22c5d8" stroke-width="3.5"/>
+    <circle cx="23" cy="23" r="8" fill="#0b3b52"/><circle cx="19" cy="19" r="3" fill="#7be3f0" opacity=".8"/>
+    <rect x="42" y="8" width="17" height="17" rx="5" fill="url(#cr)"/>
+    <text x="50.5" y="20.5" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="Arial,sans-serif">IR</text>
+  </svg>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="t0" aria-selected="true">เลือกไฟล์ Summary</button>
+    <button class="tab" role="tab" id="t1" aria-selected="false">เลือกไฟล์ IS2</button>
+    <button class="tab" role="tab" id="t2" aria-selected="false">ตรวจสอบและบันทึก</button>
+  </div>
+
+  <div class="sheet" id="sheet" data-tab="0">
+    <div class="flow" aria-hidden="true">
+      <!-- Excel -->
+      <svg width="46" height="46" viewBox="0 0 64 64"><defs><linearGradient id="ex" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4ad07f"/><stop offset="1" stop-color="#169c55"/></linearGradient></defs>
+        <rect x="20" y="6" width="40" height="52" rx="6" fill="url(#ex)"/>
+        <rect x="32" y="16" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="27" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="38" width="20" height="6" rx="2" fill="#fff" opacity=".85"/>
+        <rect x="4" y="16" width="32" height="34" rx="6" fill="#0f7a3f"/>
+        <text x="20" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" font-family="Arial,sans-serif">X</text></svg>
+      <div class="to">
+        <svg width="42" height="30" viewBox="0 0 42 30"><line x1="0" y1="15" x2="42" y2="15" stroke="#ff9aa2" stroke-width="1.2"/><circle cx="21" cy="15" r="12" fill="#fff" stroke="#ff7a85" stroke-width="2"/>
+          <path d="M14.5 13a7 7 0 0 1 12-2.5M27.5 17a7 7 0 0 1-12 2.5" fill="none" stroke="#ff5c6c" stroke-width="2" stroke-linecap="round"/><path d="M27 7v4h-4M15 23v-4h4" fill="none" stroke="#ff5c6c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>TO</span>
+      </div>
+      <!-- IS2 -->
+      <svg width="46" height="46" viewBox="0 0 64 64"><defs><linearGradient id="th" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2b59ff"/><stop offset=".5" stop-color="#ffd23f"/><stop offset="1" stop-color="#ff4d4d"/></linearGradient></defs>
+        <path d="M12 4h30l14 14v38a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#fff" stroke="#c7cdd8" stroke-width="2"/><path d="M42 4v14h14" fill="#e6eaf2" stroke="#c7cdd8" stroke-width="2"/>
+        <rect x="16" y="24" width="32" height="20" rx="4" fill="url(#th)"/>
+        <text x="32" y="55" text-anchor="middle" font-size="10" font-weight="700" fill="#2f6df6" font-family="Arial,sans-serif">IS2</text></svg>
+    </div>
+
+    <!-- ขั้นที่ 1: Summary -->
+    <div class="pane" id="p0">
+      <div class="drop" id="dropX" tabindex="0" role="button" aria-label="เลือกไฟล์ Summary">
+        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true"><rect x="20" y="6" width="40" height="52" rx="6" fill="url(#ex)"/><rect x="32" y="16" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="27" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="38" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="4" y="16" width="32" height="34" rx="6" fill="#0f7a3f"/><text x="20" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" font-family="Arial,sans-serif">X</text><circle cx="52" cy="50" r="10" fill="#2f8bff" stroke="#fff" stroke-width="2"/><path d="M52 55V45m-4.5 4.5L52 45l4.5 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="big">แตะเพื่อเลือกไฟล์ หรือลากมาวางที่นี่</span>
+        <span class="small">รองรับไฟล์ .xlsx (Summary)</span>
+        <input type="file" id="pickX" accept=".xlsx,.xlsm" hidden>
+      </div>
+      <div class="info" id="xinfo"></div>
+    </div>
+
+    <!-- ขั้นที่ 2: IS2 -->
+    <div class="pane" id="p1" hidden>
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="เลือกไฟล์ IS2">
+        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 4h30l14 14v38a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#fff" stroke="#c7cdd8" stroke-width="2"/><path d="M42 4v14h14" fill="#e6eaf2" stroke="#c7cdd8" stroke-width="2"/><rect x="16" y="24" width="32" height="20" rx="4" fill="url(#th)"/><text x="32" y="55" text-anchor="middle" font-size="10" font-weight="700" fill="#2f6df6" font-family="Arial,sans-serif">IS2</text><circle cx="52" cy="50" r="10" fill="#2f8bff" stroke="#fff" stroke-width="2"/><path d="M52 55V45m-4.5 4.5L52 45l4.5 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="big">แตะเพื่อเลือกไฟล์ หรือลากมาวางที่นี่</span>
+        <span class="small">รองรับไฟล์ .IS2 (เลือกได้หลายไฟล์)</span>
+        <input type="file" id="pick" multiple hidden>
+      </div>
+      <div class="info" id="xinfo2"></div>
+    </div>
+
+    <!-- ขั้นที่ 3: ตรวจสอบและบันทึก -->
+    <div class="pane" id="p2" hidden>
+      <details>
+        <summary>ตั้งค่าการตั้งชื่อ</summary>
+        <div class="grid">
+          <label>ตัวคั่นระหว่างช่อง<input id="sep" value=","></label>
+          <label>เลขที่ (No.)
+            <select id="noMode"><option value="plain">1, 2, 3 ...</option><option value="pad">01, 02, 03 ...</option></select></label>
+          <label>คำต่อท้ายเมื่อชื่อซ้ำ<input id="dupWord" value="ซ้ำ"></label>
+          <label style="display:flex;gap:8px;align-items:center;align-self:end"><input type="checkbox" id="incKeep" checked style="width:auto;margin:0"> รวมไฟล์ที่ไม่เปลี่ยนชื่อไว้ในผลลัพธ์ด้วย</label>
+        </div>
+      </details>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>No.</th><th>ไฟล์ที่เลือก</th><th>ชื่อใหม่</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="row">
+        <button class="b" id="zip" disabled>ดาวน์โหลดทั้งหมดเป็น ZIP (ข้างในเป็นไฟล์ .IS2)</button>
+        <button class="b alt" id="each" disabled>ดาวน์โหลดทีละไฟล์ .IS2</button>
+        <button class="b alt" id="folder" disabled>บันทึกลงโฟลเดอร์</button>
+        <button class="b alt" id="inplace" disabled>เปลี่ยนชื่อในโฟลเดอร์เดิม</button>
+        <button class="b alt" id="more">เพิ่มไฟล์ .IS2</button>
+        <button class="b alt" id="clear" disabled>ล้างรายการ</button>
+      </div>
+      <div id="msg" role="status"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function showTab(n){
+  for (let i = 0; i < 3; i++){
+    document.getElementById('p' + i).hidden = i !== n;
+    document.getElementById('t' + i).setAttribute('aria-selected', i === n ? 'true' : 'false');
+  }
+  document.getElementById('sheet').dataset.tab = n;
+}
+
+/* No., Floor, Room, Devices, Detail  (จาก 06_Summary_Thermoscan_SCG__Before_.xlsx) */
+const DEFAULT_DATA = [[1,"1st","MDB ROOM","MDB PANEL","MAIN MDB"],[2,"1st","MDB ROOM","MDB PANEL","CAP BANK (ชุดบน)"],[3,"1st","MDB ROOM","MDB PANEL","CAP BANK (ชุดล่าง)"],[4,"1st","MDB ROOM","MDB PANEL","1LPW"],[5,"1st","MDB ROOM","MDB PANEL","FEEDER AMCC"],[6,"1st","MDB ROOM","MDB PANEL","CH1"],[7,"1st","MDB ROOM","MDB PANEL","CH2"],[8,"1st","MDB ROOM","MDB PANEL","CH3"],[9,"1st","MDB ROOM","MDB PANEL","1DP"],[10,"1st","MDB ROOM","MDB PANEL","2DP"],[11,"1st","MDB ROOM","MDB PANEL","3DP"],[12,"1st","MDB ROOM","EMDB PANEL","MAIN ATS"],[13,"1st","MDB ROOM","EMDB PANEL","1ELP"],[14,"1st","MDB ROOM","EMDB PANEL","2ELP"],[15,"1st","MDB ROOM","EMDB PANEL","3ELP"],[16,"1st","MDB ROOM","EMDB PANEL","PL"],[17,"1st","MDB ROOM","EMDB PANEL","SL"],[18,"1st","MDB ROOM","EMDB PANEL","BP1&2"],[19,"1st","MDB ROOM","EMDB PANEL","WWTP"],[20,"1st","PUMP ROOM","PANEL","CH2"],[21,"1st","PUMP ROOM","PANEL","CH3"],[22,"1st","PUMP ROOM","PANEL","MAIN CHP"],[23,"1st","PUMP ROOM","PANEL","CHP-1"],[24,"1st","PUMP ROOM","PANEL","CHP-2"],[25,"1st","PUMP ROOM","PANEL","CHP-3"],[26,"1st","PUMP ROOM","PANEL","MV1"],[27,"1st","EE SHAFT","PANEL","1AP1"],[28,"1st","EE SHAFT","PANEL","1AP2"],[29,"1st","EE SHAFT","LOAD PANEL","1LP1"],[30,"1st","EE SHAFT","LOAD PANEL","1LP1 (CIRCIUT 9)"],[31,"1st","EE SHAFT","LOAD PANEL","1LP1 (CIRCUIT 16)"],[32,"1st","EE SHAFT","LOAD PANEL","1LP1 (CIRCUIT 18)"],[33,"1st","EE SHAFT","LOAD PANEL","1LP2"],[34,"1st","EE SHAFT","LOAD PANEL","1LP3"],[35,"1st","EE SHAFT","LOAD PANEL","1ELP"],[36,"1st","EE SHAFT","LOAD PANEL","1LPE"],[37,"1st","EE SHAFT","LOAD PANEL","1LPE (CIRCUIT 21)"],[38,"1st","EE SHAFT","LOAD PANEL","1LPE (CIRCUIT 23)"],[39,"1st","EE SHAFT","LOAD PANEL","ด้านข้างตู้ 1ELP"],[40,"1st","STORE COFFEE SHOP","LOAD PANEL","LOAD COFEE SHOP"],[41,"1st","MAID","LOAD PANEL","MCB"],[42,"1st","EE SHAFT","LOAD PANEL","LPM"],[43,"1st","EE SHAFT","LOAD PANEL","LPM (CIRCUIT 11)"],[44,"1st","PARKING","DROP OUT FUSE","HIGH VOLT"],[45,"1st","PARKING","TRANSFORMER","TR 1250 KVA (HIGH VOLT)"],[46,"1st","PARKING","TRANSFORMER","TR 1250 KVA (LOW VOLT)"],[47,"2nd","EE SHAFT","LOAD PANEL","2ELP"],[48,"2nd","EE SHAFT","LOAD PANEL","2ELP (CIRCUIT 8)"],[49,"2nd","MDB","LOAD PANEL","2LP1"],[50,"2nd","EE SHAFT","LOAD PANEL","2LP2"],[51,"2nd","EE SHAFT","LOAD PANEL","2AP1"],[52,"2nd","EE SHAFT","LOAD PANEL","2AP2"],[53,"3rd","EE SHAFT","LOAD PANEL","3LP1"],[54,"3rd","EE SHAFT","LOAD PANEL","3LP2"],[55,"3rd","EE SHAFT","LOAD PANEL","3LP3"],[56,"3rd","EE SHAFT","LOAD PANEL","3ELP"],[57,"3rd","EE SHAFT","LOAD PANEL","3AP2"],[58,"3rd","EE SHAFT","LOAD PANEL","3AP1"],[59,"3rd","STAFF","LOAD PANEL","MCB"]];
+let DATA = DEFAULT_DATA;
+let MAP = new Map(DATA.map(r => [r[0], r]));
+let summarySource = 'ตารางที่ฝังไว้ในโปรแกรม (59 รายการ) — เลือกไฟล์ Summary เพื่อใช้ตารางของคุณเอง';
+
+/* ---------- อ่านไฟล์ .xlsx (ไม่ต้องใช้ไลบรารีภายนอก) ---------- */
+async function unzip(buf){
+  const dv = new DataView(buf), u8 = new Uint8Array(buf);
+  let e = u8.length - 22;
+  while (e >= 0 && dv.getUint32(e, true) !== 0x06054b50) e--;
+  if (e < 0) throw new Error('ไม่ใช่ไฟล์ xlsx');
+  const n = dv.getUint16(e + 10, true); let p = dv.getUint32(e + 16, true);
+  const dec = new TextDecoder(), out = {};
+  for (let i = 0; i < n; i++){
+    const method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true);
+    const nl = dv.getUint16(p + 28, true), el = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true);
+    const lho = dv.getUint32(p + 42, true);
+    const name = dec.decode(u8.subarray(p + 46, p + 46 + nl));
+    const ds = lho + 30 + dv.getUint16(lho + 26, true) + dv.getUint16(lho + 28, true);
+    out[name] = { method, data: u8.subarray(ds, ds + csize) };
+    p += 46 + nl + el + cl;
+  }
+  return async name => {
+    const f = out[name]; if (!f) return null;
+    if (f.method === 0) return dec.decode(f.data);
+    const ds = new Blob([f.data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    return dec.decode(await new Response(ds).arrayBuffer());
+  };
+}
+const unesc = s => s.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d))
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&');
+const attr = (tag, k) => { const m = tag.match(new RegExp('(?:^|\\s)' + k + '="([^"]*)"')); return m ? unesc(m[1]) : null; };
+const texts = x => [...x.matchAll(/<t[^>]*>([\s\S]*?)<\/t>/g)].map(m => unesc(m[1])).join('');
+
+async function parseSummary(buf){
+  const get = await unzip(buf);
+  const wb = await get('xl/workbook.xml');
+  if (!wb) throw new Error('ไม่พบข้อมูลสมุดงาน');
+  const sheets = [...wb.matchAll(/<sheet\s[^>]*>/g)].map(m => ({ name: attr(m[0], 'name'), rid: attr(m[0], 'r:id') }));
+  const rels = await get('xl/_rels/workbook.xml.rels') || '';
+  const target = {}; for (const m of rels.matchAll(/<Relationship\s[^>]*>/g)) target[attr(m[0], 'Id')] = attr(m[0], 'Target');
+  const sh = sheets.find(s => /summary/i.test(s.name)) || sheets[0];
+  let path = target[sh.rid] || 'worksheets/sheet1.xml';
+  path = path.startsWith('/') ? path.slice(1) : 'xl/' + path;
+  const ss = await get('xl/sharedStrings.xml');
+  const shared = ss ? [...ss.matchAll(/<si[\s>][\s\S]*?<\/si>|<si\/>/g)].map(m => texts(m[0])) : [];
+  const xml = await get(path);
+  if (!xml) throw new Error('อ่านชีต ' + sh.name + ' ไม่ได้');
+  const rows = [];
+  for (const rm of xml.matchAll(/<row\s[^>]*?(?:\/>|>([\s\S]*?)<\/row>)/g)){
+    if (!rm[1]) continue;
+    const cells = {};
+    for (const cm of rm[1].matchAll(/<c\s([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g)){
+      const col = (attr(cm[1], 'r') || '').replace(/\d+/g, ''), t = attr(cm[1], 't'), body = cm[2] || '';
+      let v = null;
+      if (t === 'inlineStr') v = texts(body);
+      else { const vm = body.match(/<v>([\s\S]*?)<\/v>/); if (vm) v = t === 's' ? shared[+vm[1]] : unesc(vm[1]); }
+      if (v !== null) cells[col] = v.trim();
+    }
+    const no = /^\d+(\.0+)?$/.test(cells.A || '') ? parseInt(cells.A, 10) : NaN;
+    if (isNaN(no) || no < 1) continue;
+    const colIdx = c => c.split('').reduce((s, ch) => s * 26 + ch.charCodeAt(0) - 64, 0);
+    const vals = Object.keys(cells).filter(c => c !== 'A' && cells[c] !== '').sort((a, b) => colIdx(a) - colIdx(b)).map(c => cells[c].replace(/\s+/g, ' ').trim());
+    if (vals.length >= 4) rows.push([no, vals[0], vals[1], vals[2], vals[3]]);
+  }
+  if (!rows.length) throw new Error('ไม่พบตารางข้อมูล (แถวข้อมูลต้องขึ้นต้นด้วยเลข No. ตามด้วย Floor, Room, Devices, Detail)');
+  return { rows, sheet: sh.name };
+}
+
+async function loadSummary(file){
+  try {
+    const { rows, sheet } = await parseSummary(await file.arrayBuffer());
+    DATA = rows; MAP = new Map(rows.map(r => [r[0], r]));
+    summarySource = 'ใช้ไฟล์ ' + file.name + ' (ชีต ' + sheet + ') — ' + rows.length + ' รายการ';
+    $('xinfo').style.color = 'var(--ok)';
+  } catch (e) {
+    $('xinfo').style.color = 'var(--bad)';
+    summarySource = 'อ่านไฟล์ ' + file.name + ' ไม่สำเร็จ: ' + e.message + ' (ยังใช้ตารางเดิมอยู่)';
+  }
+  render();
+  if (summarySource.indexOf('ไม่สำเร็จ') < 0) showTab(1);
+}
+const $ = id => document.getElementById(id);
+const BAD = /[\\/:*?"<>|\u0000-\u001f]/g;
+let files = [];   // {file, no, ext}
+let names = [];
+
+function say(t, cls){ const m = $('msg'); m.textContent = t; m.className = cls || ''; }
+
+function stemFor(no){
+  const r = MAP.get(no); if (!r) return null;
+  const sep = $('sep').value;
+  const n = $('noMode').value === 'pad' ? String(no).padStart(2, '0') : String(no);
+  return [n, r[1], r[2], r[3], r[4]].join(sep).replace(BAD, '_');
+}
+
+let OUT = [];   // รายการไฟล์ที่จะบันทึกจริง {file, name, keep}
+
+function addFiles(list){
+  for (const f of list){
+    const m = f.name.match(/^\s*(\d+)/);          // ยึดเฉพาะตัวเลขติดกันที่อยู่หน้าสุดของชื่อไฟล์
+    const dot = f.name.lastIndexOf('.');
+    files.push({
+      file: f,
+      no: m ? parseInt(m[1], 10) : NaN,
+      pure: /^\d+\.[^.]+$/.test(f.name),           // ชื่อแบบ 309.IS2 (เลขล้วน) ถือเป็นไฟล์ต้นฉบับ
+      ext: dot > 0 ? f.name.slice(dot + 1) : ''
+    });
+  }
+  files.sort((a, b) => {
+    const x = isNaN(a.no) ? 1e12 : a.no, y = isNaN(b.no) ? 1e12 : b.no;
+    if (x !== y) return x - y;
+    if (a.pure !== b.pure) return a.pure ? -1 : 1;
+    return a.file.name.localeCompare(b.file.name, undefined, { numeric: true });
+  });
+  render();
+  showTab(2);
+}
+
+function render(){
+  $('xinfo').textContent = summarySource; $('xinfo2').textContent = 'ตารางที่ใช้: ' + summarySource;
+  const tb = $('rows'); tb.textContent = '';
+  const word = $('dupWord').value.trim() || 'ซ้ำ';
+  const seen = {};
+  const matched = new Set();
+  let nDup = 0, nKeep = 0, nNew = 0;
+  names = []; 
+  const info = files.map(x => {
+    const stem = isNaN(x.no) ? null : stemFor(x.no);
+    if (stem === null){ names.push(x.file.name); return { keep: true, why: isNaN(x.no) ? 'ไม่มีเลขนำหน้า — ไม่เปลี่ยนชื่อ' : 'ไม่มีเลข ' + x.no + ' ในตาราง — ไม่เปลี่ยนชื่อ' }; }
+    const key = stem.toLowerCase() + '.' + x.ext.toLowerCase();
+    const c = seen[key] = (seen[key] || 0) + 1;
+    const tail = c === 1 ? '' : ' ' + word + (c > 2 ? c - 1 : '');
+    matched.add(x.no);
+    const nm = stem + tail + (x.ext ? '.' + x.ext : '');
+    names.push(nm);
+    return { keep: false, dup: c > 1, nm };
+  });
+  OUT = files.map((x, i) => ({ file: x.file, name: names[i], keep: info[i].keep }))
+             .filter(o => !o.keep || $('incKeep').checked);
+
+  const add = (a, b, c, cls) => {
+    const tr = document.createElement('tr');
+    [a, b, c].forEach((v, k) => { const td = document.createElement('td'); td.textContent = v; if (k === 2) td.className = cls; tr.appendChild(td); });
+    tb.appendChild(tr);
+  };
+  if (!files.length){
+    DATA.forEach(r => add(r[0], '—', stemFor(r[0]) + '.IS2', 'new'));
+  } else {
+    files.forEach((x, i) => {
+      const f = info[i];
+      if (f.keep){ nKeep++; add(isNaN(x.no) ? '' : x.no, x.file.name, f.why, 'keep'); }
+      else if (f.dup){ nDup++; add(x.no, x.file.name, f.nm + '  (ซ้ำ)', 'dup'); }
+      else { nNew++; add(x.no, x.file.name, f.nm, 'new'); }
+    });
+    const miss = DATA.map(r => r[0]).filter(n => !matched.has(n));
+    if (miss.length) add('', 'ยังไม่ได้เลือกไฟล์เลข: ' + (miss.length > 20 ? miss.slice(0, 20).join(', ') + ' ... (รวมอีก ' + (miss.length - 20) + ' เลข)' : miss.join(', ')), '', 'miss');
+  }
+  const ok = OUT.length > 0;
+  ['zip', 'each', 'folder'].forEach(id => $(id).disabled = !ok);
+  $('inplace').disabled = !(nNew + nDup > 0);
+  $('clear').disabled = !files.length;
+  if (!files.length) say('ตารางด้านล่างคือชื่อใหม่ทั้งหมดตาม Summary เลือกไฟล์ .IS2 เพื่อเริ่มเปลี่ยนชื่อ');
+  else say('เปลี่ยนชื่อ ' + nNew + ' ไฟล์ | ชื่อซ้ำ (ใส่ "' + word + '" ต่อท้าย) ' + nDup + ' ไฟล์ | ไม่เปลี่ยนชื่อ ' + nKeep + ' ไฟล์', 'ok');
+}
+
+/* ---------- ZIP (ไม่บีบอัด) ---------- */
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++){ let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8){ let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC[(c ^ u8[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+
+async function buildZip(){
+  const enc = new TextEncoder(), parts = [], central = [];
+  const d = new Date();
+  const time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1);
+  const date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+  let offset = 0;
+  for (let i = 0; i < OUT.length; i++){
+    const data = new Uint8Array(await OUT[i].file.arrayBuffer());
+    const nm = enc.encode(OUT[i].name), crc = crc32(data);
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true);
+    lh.setUint16(10, time, true); lh.setUint16(12, date, true);
+    lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+    lh.setUint16(26, nm.length, true);
+    parts.push(lh.buffer, nm, data);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true);
+    ch.setUint16(12, time, true); ch.setUint16(14, date, true);
+    ch.setUint32(16, crc, true); ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true);
+    ch.setUint16(28, nm.length, true); ch.setUint32(42, offset, true);
+    central.push(ch.buffer, nm);
+    offset += 30 + nm.length + data.length;
+  }
+  const cdSize = central.reduce((s, p) => s + (p.byteLength ?? p.length), 0);
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, OUT.length, true); end.setUint16(10, OUT.length, true);
+  end.setUint32(12, cdSize, true); end.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, end.buffer], { type: 'application/zip' });
+}
+
+const blocked = e => e && (e.name === 'SecurityError' || /cross origin|sub frame/i.test(e.message || ''));
+
+function save(blob, name){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([blob], { type: 'application/octet-stream' })); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+$('zip').onclick = async () => {
+  try { say('กำลังสร้างไฟล์ ZIP...'); save(await buildZip(), 'renamed_IS2.zip'); say('บันทึก renamed_IS2.zip แล้ว แตกไฟล์ ZIP จะได้ไฟล์ .IS2 ชื่อใหม่ทั้งหมด', 'ok'); }
+  catch (e) { say('สร้าง ZIP ไม่สำเร็จ: ' + e.message, 'bad'); }
+};
+
+$('each').onclick = async () => {
+  for (let i = 0; i < OUT.length; i++){ save(OUT[i].file, OUT[i].name); await new Promise(r => setTimeout(r, 300)); }
+  say('ดาวน์โหลด ' + OUT.length + ' ไฟล์ .IS2 แล้ว เนื้อหาเหมือนเดิม เปลี่ยนแค่ชื่อ (ถ้าเบราว์เซอร์ถาม ให้อนุญาตดาวน์โหลดหลายไฟล์)', 'ok');
+};
+
+$('inplace').onclick = async () => {
+  if (!window.showDirectoryPicker){ say('เบราว์เซอร์นี้ไม่รองรับ ใช้ Chrome หรือ Edge บนคอมพิวเตอร์ หรือเลือกดาวน์โหลดเป็น ZIP แทน', 'bad'); return; }
+  try {
+    const dir = await showDirectoryPicker({ mode: 'readwrite' });
+    let done = 0; const fail = [];
+    const todo = OUT.filter(o => !o.keep);
+    for (const o of todo){
+      try { const h = await dir.getFileHandle(o.file.name); await h.move(o.name); done++; }
+      catch (e) { fail.push(o.file.name); }
+    }
+    if (fail.length) say('สำเร็จ ' + done + ' ไฟล์ ไม่สำเร็จ ' + fail.length + ': ' + fail.join(', ') + ' (ตรวจว่าเลือกโฟลเดอร์ที่มีไฟล์เหล่านี้อยู่)', 'bad');
+    else say('เปลี่ยนชื่อในโฟลเดอร์เรียบร้อย ' + done + ' ไฟล์', 'ok');
+  } catch (e) { if (e.name !== 'AbortError') say(blocked(e) ? 'หน้านี้เปิดอยู่ในกรอบแสดงตัวอย่าง จึงเปลี่ยนชื่อในโฟลเดอร์ไม่ได้ ให้บันทึกไฟล์ HTML ไว้ในเครื่องแล้วเปิดด้วย Chrome/Edge โดยตรง หรือใช้ปุ่มดาวน์โหลดแทน' : 'เกิดข้อผิดพลาด: ' + e.message, 'bad'); }
+};
+
+$('folder').onclick = async () => {
+  if (!window.showDirectoryPicker){ say('เบราว์เซอร์นี้ไม่รองรับการบันทึกลงโฟลเดอร์ ใช้ Chrome หรือ Edge หรือกด "ดาวน์โหลดเป็น .IS2 (ทีละไฟล์)" แทน', 'bad'); return; }
+  try {
+    const dir = await showDirectoryPicker({ mode: 'readwrite' });
+    for (let i = 0; i < OUT.length; i++){
+      const h = await dir.getFileHandle(OUT[i].name, { create: true });
+      const w = await h.createWritable();
+      await w.write(OUT[i].file); await w.close();
+    }
+    say('บันทึก ' + OUT.length + ' ไฟล์ .IS2 ลงโฟลเดอร์แล้ว (เนื้อหาเหมือนเดิม เปลี่ยนแค่ชื่อ)', 'ok');
+  } catch (e) {
+    if (e.name === 'AbortError') return;
+    if (blocked(e)){ say('หน้านี้เปิดอยู่ในกรอบแสดงตัวอย่าง จึงเลือกโฟลเดอร์ไม่ได้ กำลังดาวน์โหลดไฟล์ .IS2 ทั้งหมดให้แทน (ถ้าอยากเลือกโฟลเดอร์ ให้บันทึกไฟล์ HTML ไว้ในเครื่องแล้วเปิดด้วย Chrome/Edge โดยตรง)'); await $('each').onclick(); return; }
+    say('เกิดข้อผิดพลาด: ' + e.message, 'bad');
+  }
+};
+
+$('clear').onclick = () => { files = []; render(); };
+
+function wire(dropEl, input, handler){
+  dropEl.onclick = () => input.click();
+  dropEl.onkeydown = e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); input.click(); } };
+  input.onchange = () => { handler(input.files); input.value = ''; };
+  ['dragenter', 'dragover'].forEach(ev => dropEl.addEventListener(ev, e => { e.preventDefault(); dropEl.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(ev => dropEl.addEventListener(ev, e => { e.preventDefault(); dropEl.classList.remove('over'); }));
+  dropEl.addEventListener('drop', e => handler(e.dataTransfer.files));
+}
+wire($('drop'), $('pick'), addFiles);
+wire($('dropX'), $('pickX'), l => { if (l[0]) loadSummary(l[0]); });
+$('sep').addEventListener('input', render); $('noMode').addEventListener('change', render);
+$('dupWord').addEventListener('input', render); $('incKeep').addEventListener('change', render);
+[0, 1, 2].forEach(i => document.getElementById('t' + i).onclick = () => showTab(i));
+$('more').onclick = () => showTab(1);
+render();
+</script>
+</body>
+</html>
