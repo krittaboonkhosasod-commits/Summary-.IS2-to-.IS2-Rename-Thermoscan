@@ -12,8 +12,8 @@ body{margin:0;min-height:100vh;color:var(--ink);font:17px/1.4 -apple-system,Blin
   background:radial-gradient(60vmax 60vmax at 8% 4%,var(--bg1),transparent 60%),radial-gradient(55vmax 55vmax at 95% 12%,var(--bg2),transparent 60%),radial-gradient(60vmax 60vmax at 80% 100%,var(--bg3),transparent 60%),radial-gradient(55vmax 55vmax at 5% 95%,var(--bg4),transparent 60%),var(--bg1);background-attachment:fixed}
 .brand{position:absolute;left:12px;top:6px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;letter-spacing:.02em;z-index:3}
 .brand small{font-weight:500;color:var(--mute);font-size:1em}
-.foot{position:fixed;right:14px;bottom:10px;z-index:1;pointer-events:none;user-select:none;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);opacity:.55}
-.shell{max-width:860px;margin:0 auto;padding:50px 16px 60px}
+.foot{position:fixed;right:14px;bottom:10px;z-index:0;pointer-events:none;user-select:none;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);opacity:.55}
+.shell{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:50px 16px 60px}
 .card{position:relative;width:100%;margin:0 0 18px;padding:14px 17px 16px;border-radius:24px;background:linear-gradient(135deg,rgba(186,230,253,.85),rgba(199,215,254,.8));box-shadow:0 10px 34px var(--sh),inset 0 1px 0 rgba(255,255,255,.85)}
 .card h1{margin:0 0 5px 4px;font-size:clamp(17px,5vw,21px);line-height:30px;font-weight:700;letter-spacing:0}
 .bigc{position:absolute;right:20px;top:6px;width:84px;height:auto;z-index:3;filter:drop-shadow(0 6px 8px rgba(0,40,120,.3));pointer-events:none}
@@ -76,7 +76,7 @@ button.b:disabled{opacity:.4;cursor:not-allowed}
 #msg.bad{color:var(--bad)}#msg.ok{color:var(--ok)}
 details{margin-bottom:12px}
 summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
-@media (max-width:640px){.card h1{max-width:calc(100% - 96px)}.bigc{width:68px;right:14px}.tab{padding:9px 20px 6px 12px;font-size:15px}}
+@media (max-width:640px){.card h1{max-width:calc(100% - 96px)}.bigc{width:68px;right:14px}.tab{padding:9px 16px 6px 10px;font-size:13.5px}.tab[aria-selected="true"]{margin-right:16px}.tab[aria-selected="true"]:not(:first-child){margin-left:16px}.tab[aria-selected="true"]::after{right:-16px;width:16px;height:16px;background:radial-gradient(circle at 100% 0,transparent 15px,var(--glass2) 16px)}.tab[aria-selected="true"]:not(:first-child)::before{left:-16px;width:16px;height:16px;background:radial-gradient(circle at 0 0,transparent 15px,var(--glass2) 16px)}}
 </style>
 </head>
 <body>
@@ -93,9 +93,9 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
 
   <div class="fold">
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" id="t0" aria-selected="true">เลือกไฟล์ Summary</button>
-    <button class="tab" role="tab" id="t1" aria-selected="false">เลือกไฟล์ IS2</button>
-    <button class="tab" role="tab" id="t2" aria-selected="false">ตรวจสอบและบันทึก</button>
+    <button class="tab" role="tab" id="t0" aria-controls="p0" aria-selected="true">เลือกไฟล์ Summary</button>
+    <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="false" tabindex="-1">เลือกไฟล์ IS2</button>
+    <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">ตรวจสอบและบันทึก</button>
   </div>
 
   <div class="sheet" id="sheet" data-tab="0">
@@ -113,7 +113,7 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
     </span></div>
 
     <!-- ขั้นที่ 1: Summary -->
-    <div class="pane" id="p0">
+    <div class="pane" id="p0" role="tabpanel" aria-labelledby="t0">
       <div class="drop" id="dropX" tabindex="0" role="button" aria-label="เลือกไฟล์ Summary">
         <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true"><rect x="20" y="6" width="40" height="52" rx="6" fill="url(#ex)"/><rect x="32" y="16" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="27" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="38" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="4" y="16" width="32" height="34" rx="6" fill="#0f7a3f"/><text x="20" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" font-family="Arial,sans-serif">X</text><circle cx="52" cy="50" r="10" fill="#2f8bff" stroke="#fff" stroke-width="2"/><path d="M52 55V45m-4.5 4.5L52 45l4.5 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="big">แตะเพื่อเลือกไฟล์ หรือลากมาวางที่นี่</span>
@@ -124,7 +124,7 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
     </div>
 
     <!-- ขั้นที่ 2: IS2 -->
-    <div class="pane" id="p1" hidden>
+    <div class="pane" id="p1" role="tabpanel" aria-labelledby="t1" hidden>
       <div class="drop" id="drop" tabindex="0" role="button" aria-label="เลือกไฟล์ IS2">
         <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 4h30l14 14v38a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#fff" stroke="#c7cdd8" stroke-width="2"/><path d="M42 4v14h14" fill="#e6eaf2" stroke="#c7cdd8" stroke-width="2"/><rect x="16" y="24" width="32" height="20" rx="4" fill="url(#th)"/><text x="32" y="55" text-anchor="middle" font-size="10" font-weight="700" fill="#2f6df6" font-family="Arial,sans-serif">IS2</text><circle cx="52" cy="50" r="10" fill="#2f8bff" stroke="#fff" stroke-width="2"/><path d="M52 55V45m-4.5 4.5L52 45l4.5 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="big">แตะเพื่อเลือกไฟล์ หรือลากมาวางที่นี่</span>
@@ -135,7 +135,7 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
     </div>
 
     <!-- ขั้นที่ 3: ตรวจสอบและบันทึก -->
-    <div class="pane" id="p2" hidden>
+    <div class="pane" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
       <details>
         <summary>ตั้งค่าการตั้งชื่อ</summary>
         <div class="grid">
@@ -171,7 +171,10 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
 function showTab(n){
   for (let i = 0; i < 3; i++){
     document.getElementById('p' + i).hidden = i !== n;
-    document.getElementById('t' + i).setAttribute('aria-selected', i === n ? 'true' : 'false');
+    const t = document.getElementById('t' + i);
+    t.setAttribute('aria-selected', i === n ? 'true' : 'false');
+    t.tabIndex = i === n ? 0 : -1;
+    if (i === n && t.scrollIntoView) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
   document.getElementById('sheet').dataset.tab = n;
 }
@@ -191,6 +194,7 @@ async function unzip(buf){
   const n = dv.getUint16(e + 10, true); let p = dv.getUint32(e + 16, true);
   const dec = new TextDecoder(), out = {};
   for (let i = 0; i < n; i++){
+    if (dv.getUint32(p, true) !== 0x02014b50) throw new Error('โครงสร้างไฟล์ xlsx ไม่ถูกต้อง');
     const method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true);
     const nl = dv.getUint16(p + 28, true), el = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true);
     const lho = dv.getUint32(p + 42, true);
@@ -202,6 +206,8 @@ async function unzip(buf){
   return async name => {
     const f = out[name]; if (!f) return null;
     if (f.method === 0) return dec.decode(f.data);
+    if (f.method !== 8) throw new Error('ไฟล์ xlsx ใช้การบีบอัดที่ไม่รองรับ');
+    if (typeof DecompressionStream === 'undefined') throw new Error('เบราว์เซอร์นี้อ่านไฟล์ xlsx ไม่ได้ กรุณาอัปเดตเบราว์เซอร์ (Chrome / Edge / Safari รุ่นใหม่)');
     const ds = new Blob([f.data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
     return dec.decode(await new Response(ds).arrayBuffer());
   };
@@ -220,13 +226,14 @@ async function parseSummary(buf){
   const rels = await get('xl/_rels/workbook.xml.rels') || '';
   const target = {}; for (const m of rels.matchAll(/<Relationship\s[^>]*>/g)) target[attr(m[0], 'Id')] = attr(m[0], 'Target');
   const sh = sheets.find(s => /summary/i.test(s.name)) || sheets[0];
+  if (!sh) throw new Error('ไม่พบชีตในไฟล์');
   let path = target[sh.rid] || 'worksheets/sheet1.xml';
   path = path.startsWith('/') ? path.slice(1) : 'xl/' + path;
   const ss = await get('xl/sharedStrings.xml');
-  const shared = ss ? [...ss.matchAll(/<si[\s>][\s\S]*?<\/si>|<si\/>/g)].map(m => texts(m[0])) : [];
+  const shared = ss ? [...ss.matchAll(/<si[\s>][\s\S]*?<\/si>|<si\/>/g)].map(m => texts(m[0].replace(/<rPh[\s\S]*?<\/rPh>/g, ''))) : [];
   const xml = await get(path);
   if (!xml) throw new Error('อ่านชีต ' + sh.name + ' ไม่ได้');
-  const rows = [];
+  const rows = [], seenNo = new Set(); let skipped = 0, dupNo = 0;
   for (const rm of xml.matchAll(/<row\s[^>]*?(?:\/>|>([\s\S]*?)<\/row>)/g)){
     if (!rm[1]) continue;
     const cells = {};
@@ -234,31 +241,37 @@ async function parseSummary(buf){
       const col = (attr(cm[1], 'r') || '').replace(/\d+/g, ''), t = attr(cm[1], 't'), body = cm[2] || '';
       let v = null;
       if (t === 'inlineStr') v = texts(body);
-      else { const vm = body.match(/<v>([\s\S]*?)<\/v>/); if (vm) v = t === 's' ? shared[+vm[1]] : unesc(vm[1]); }
+      else { const vm = body.match(/<v>([\s\S]*?)<\/v>/); if (vm) v = t === 's' ? (shared[+vm[1]] ?? '') : unesc(vm[1]); }
       if (v !== null) cells[col] = v.trim();
     }
     const no = /^\d+(\.0+)?$/.test(cells.A || '') ? parseInt(cells.A, 10) : NaN;
     if (isNaN(no) || no < 1) continue;
     const colIdx = c => c.split('').reduce((s, ch) => s * 26 + ch.charCodeAt(0) - 64, 0);
     const vals = Object.keys(cells).filter(c => c !== 'A' && cells[c] !== '').sort((a, b) => colIdx(a) - colIdx(b)).map(c => cells[c].replace(/\s+/g, ' ').trim());
-    if (vals.length >= 4) rows.push([no, vals[0], vals[1], vals[2], vals[3]]);
+    if (vals.length < 4){ skipped++; continue; }
+    if (seenNo.has(no)){ dupNo++; continue; }
+    seenNo.add(no); rows.push([no, vals[0], vals[1], vals[2], vals[3]]);
   }
   if (!rows.length) throw new Error('ไม่พบตารางข้อมูล (แถวข้อมูลต้องขึ้นต้นด้วยเลข No. ตามด้วย Floor, Room, Devices, Detail)');
-  return { rows, sheet: sh.name };
+  return { rows, sheet: sh.name, skipped, dupNo };
 }
 
 async function loadSummary(file){
+  let ok = false, warn = false;
   try {
-    const { rows, sheet } = await parseSummary(await file.arrayBuffer());
+    const { rows, sheet, skipped, dupNo } = await parseSummary(await file.arrayBuffer());
     DATA = rows; MAP = new Map(rows.map(r => [r[0], r]));
-    summarySource = 'ใช้ไฟล์ ' + file.name + ' (ชีต ' + sheet + ') — ' + rows.length + ' รายการ';
-    $('xinfo').style.color = 'var(--ok)';
+    summarySource = 'ใช้ไฟล์ ' + file.name + ' (ชีต ' + sheet + ') — ' + rows.length + ' รายการ'
+      + (skipped ? ' | ข้าม ' + skipped + ' แถวที่ข้อมูลไม่ครบ 4 ช่อง' : '')
+      + (dupNo ? ' | ข้าม ' + dupNo + ' แถวที่เลข No. ซ้ำ' : '');
+    ok = true; warn = !!(skipped || dupNo);
   } catch (e) {
-    $('xinfo').style.color = 'var(--bad)';
     summarySource = 'อ่านไฟล์ ' + file.name + ' ไม่สำเร็จ: ' + e.message + ' (ยังใช้ตารางเดิมอยู่)';
   }
+  const col = ok ? (warn ? 'var(--warn)' : 'var(--ok)') : 'var(--bad)';
+  $('xinfo').style.color = col; $('xinfo2').style.color = col;
   render();
-  if (summarySource.indexOf('ไม่สำเร็จ') < 0) showTab(1);
+  if (ok) showTab(1);
 }
 const $ = id => document.getElementById(id);
 const BAD = /[\\/:*?"<>|\u0000-\u001f]/g;
@@ -276,8 +289,16 @@ function stemFor(no){
 
 let OUT = [];   // รายการไฟล์ที่จะบันทึกจริง {file, name, keep}
 
+const fileKey = f => f.name + '|' + f.size + '|' + f.lastModified;
 function addFiles(list){
-  for (const f of list){
+  const arr = Array.from(list || []);            // คัดลอกไว้ก่อน เพราะ FileList จะถูกล้างหลังจบฟังก์ชัน
+  if (!arr.length) return;
+  const have = new Set(files.map(x => fileKey(x.file)));
+  let same = 0;
+  for (const f of arr){
+    const k = fileKey(f);
+    if (have.has(k)){ same++; continue; }          // ไฟล์เดียวกันเป๊ะ (ชื่อ/ขนาด/วันที่แก้ไข) ที่เลือกซ้ำ ไม่นับเป็นไฟล์ซ้ำ
+    have.add(k);
     const m = f.name.match(/^\s*(\d+)/);          // ยึดเฉพาะตัวเลขติดกันที่อยู่หน้าสุดของชื่อไฟล์
     const dot = f.name.lastIndexOf('.');
     files.push({
@@ -294,6 +315,7 @@ function addFiles(list){
     return a.file.name.localeCompare(b.file.name, undefined, { numeric: true });
   });
   render();
+  if (same) $('msg').textContent += ' | ข้ามไฟล์ที่เลือกซ้ำ ' + same + ' ไฟล์';
   showTab(2);
 }
 
@@ -316,6 +338,18 @@ function render(){
     names.push(nm);
     return { keep: false, dup: c > 1, nm };
   });
+  /* ชื่อที่จะบันทึกต้องไม่ชนกันเอง (ไม่สนตัวพิมพ์เล็ก/ใหญ่ เพราะ Windows/macOS ถือว่าเป็นชื่อเดียวกัน) */
+  const used = new Set(), incKeep = $('incKeep').checked;
+  info.forEach((f, i) => {
+    if (f.keep && !incKeep) return;
+    const orig = f.keep ? files[i].file.name : f.nm;
+    const dot = orig.lastIndexOf('.'), base = dot > 0 ? orig.slice(0, dot) : orig, ext = dot > 0 ? orig.slice(dot) : '';
+    let nm = orig, k = 1;
+    while (used.has(nm.toLowerCase())) nm = base + ' (' + (++k) + ')' + ext;
+    used.add(nm.toLowerCase());
+    names[i] = nm;
+    if (nm !== orig){ f.nm = nm; f.forced = true; if (!f.keep) f.dup = true; }
+  });
   OUT = files.map((x, i) => ({ file: x.file, name: names[i], keep: info[i].keep }))
              .filter(o => !o.keep || $('incKeep').checked);
 
@@ -329,12 +363,17 @@ function render(){
   } else {
     files.forEach((x, i) => {
       const f = info[i];
-      if (f.keep){ nKeep++; add(isNaN(x.no) ? '' : x.no, x.file.name, f.why, 'keep'); }
+      if (f.keep){ nKeep++; add(isNaN(x.no) ? '' : x.no, x.file.name, f.why + (f.forced ? ' (ชื่อชน จึงบันทึกเป็น ' + f.nm + ')' : ''), 'keep'); }
       else if (f.dup){ nDup++; add(x.no, x.file.name, f.nm + '  (ซ้ำ)', 'dup'); }
       else { nNew++; add(x.no, x.file.name, f.nm, 'new'); }
     });
     const miss = DATA.map(r => r[0]).filter(n => !matched.has(n));
-    if (miss.length) add('', 'ยังไม่ได้เลือกไฟล์เลข: ' + (miss.length > 20 ? miss.slice(0, 20).join(', ') + ' ... (รวมอีก ' + (miss.length - 20) + ' เลข)' : miss.join(', ')), '', 'miss');
+    if (miss.length){
+      const tr = document.createElement('tr'), td = document.createElement('td');
+      td.colSpan = 3; td.className = 'miss';
+      td.textContent = 'ยังไม่ได้เลือกไฟล์เลข: ' + (miss.length > 20 ? miss.slice(0, 20).join(', ') + ' ... (รวมอีก ' + (miss.length - 20) + ' เลข)' : miss.join(', '));
+      tr.appendChild(td); tb.appendChild(tr);
+    }
   }
   const ok = OUT.length > 0;
   ['zip', 'each', 'folder'].forEach(id => $(id).disabled = !ok);
@@ -398,14 +437,21 @@ $('each').onclick = async () => {
 };
 
 $('inplace').onclick = async () => {
-  if (!window.showDirectoryPicker){ say('เบราว์เซอร์นี้ไม่รองรับ ใช้ Chrome หรือ Edge บนคอมพิวเตอร์ หรือเลือกดาวน์โหลดเป็น ZIP แทน', 'bad'); return; }
+  if (!window.showDirectoryPicker || !(window.FileSystemFileHandle && FileSystemFileHandle.prototype.move)){ say('เบราว์เซอร์นี้ไม่รองรับ ใช้ Chrome หรือ Edge บนคอมพิวเตอร์ หรือเลือกดาวน์โหลดเป็น ZIP แทน', 'bad'); return; }
   try {
     const dir = await showDirectoryPicker({ mode: 'readwrite' });
     let done = 0; const fail = [];
     const todo = OUT.filter(o => !o.keep);
     for (const o of todo){
-      try { const h = await dir.getFileHandle(o.file.name); await h.move(o.name); done++; }
-      catch (e) { fail.push(o.file.name); }
+      try {
+        const h = await dir.getFileHandle(o.file.name);
+        if (o.name.toLowerCase() !== o.file.name.toLowerCase()){
+          let exists = false;
+          try { await dir.getFileHandle(o.name); exists = true; } catch (_) {}
+          if (exists){ fail.push(o.file.name + ' (มีไฟล์ชื่อใหม่อยู่แล้ว ไม่ทับให้)'); continue; }
+        }
+        await h.move(o.name); done++;
+      } catch (e) { fail.push(o.file.name); }
     }
     if (fail.length) say('สำเร็จ ' + done + ' ไฟล์ ไม่สำเร็จ ' + fail.length + ': ' + fail.join(', ') + ' (ตรวจว่าเลือกโฟลเดอร์ที่มีไฟล์เหล่านี้อยู่)', 'bad');
     else say('เปลี่ยนชื่อในโฟลเดอร์เรียบร้อย ' + done + ' ไฟล์', 'ok');
@@ -432,19 +478,40 @@ $('folder').onclick = async () => {
 $('clear').onclick = () => { files = []; render(); };
 
 function wire(dropEl, input, handler){
-  dropEl.onclick = () => input.click();
+  dropEl.onclick = e => { if (e.target !== input) input.click(); };
   dropEl.onkeydown = e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); input.click(); } };
   input.onchange = () => { handler(input.files); input.value = ''; };
   ['dragenter', 'dragover'].forEach(ev => dropEl.addEventListener(ev, e => { e.preventDefault(); dropEl.classList.add('over'); }));
   ['dragleave', 'drop'].forEach(ev => dropEl.addEventListener(ev, e => { e.preventDefault(); dropEl.classList.remove('over'); }));
-  dropEl.addEventListener('drop', e => handler(e.dataTransfer.files));
+  dropEl.addEventListener('drop', e => { e.stopPropagation(); handler(e.dataTransfer.files); });
 }
 wire($('drop'), $('pick'), addFiles);
 wire($('dropX'), $('pickX'), l => { if (l[0]) loadSummary(l[0]); });
 $('sep').addEventListener('input', render); $('noMode').addEventListener('change', render);
 $('dupWord').addEventListener('input', render); $('incKeep').addEventListener('change', render);
-[0, 1, 2].forEach(i => document.getElementById('t' + i).onclick = () => showTab(i));
+[0, 1, 2].forEach(i => {
+  const t = $('t' + i);
+  t.onclick = () => showTab(i);
+  t.onkeydown = e => {
+    let j = null;
+    if (e.key === 'ArrowRight') j = (i + 1) % 3; else if (e.key === 'ArrowLeft') j = (i + 2) % 3;
+    else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = 2;
+    if (j === null) return;
+    e.preventDefault(); showTab(j); $('t' + j).focus();
+  };
+});
+/* วางไฟล์นอกกรอบ: กันเบราว์เซอร์เปิดไฟล์ทับหน้านี้ (ข้อมูลที่เลือกไว้จะหาย) และส่งต่อให้ถูกที่ */
+['dragover', 'drop'].forEach(ev => window.addEventListener(ev, e => {
+  if (!e.dataTransfer || !Array.from(e.dataTransfer.types || []).includes('Files')) return;
+  e.preventDefault();
+  if (ev !== 'drop') return;
+  const l = Array.from(e.dataTransfer.files);
+  const xl = l.filter(f => /\.xls[xm]$/i.test(f.name)), rest = l.filter(f => !/\.xls[xm]$/i.test(f.name));
+  if (rest.length) addFiles(rest);
+  if (xl.length) loadSummary(xl[0]);
+}));
 $('more').onclick = () => showTab(1);
+showTab(0);
 render();
 </script>
 </body>
