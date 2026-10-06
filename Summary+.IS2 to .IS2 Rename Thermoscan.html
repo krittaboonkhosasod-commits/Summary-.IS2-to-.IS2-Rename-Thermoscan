@@ -4,64 +4,79 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>THERMIFY PRO – เปลี่ยนชื่อไฟล์ IS2</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0f1722;--mute:#6b7280;--line:#e3e7ee;--acc:#2f6df6;--accink:#fff;--ok:#168a4a;--bad:#c62828;--warn:#b45f06;--field:#f2f4f8}
-*{box-sizing:border-box}
-html,body{min-height:100%}
-body{margin:0;color:var(--ink);font:15px/1.5 "Prompt","Noto Sans Thai","Sarabun","Leelawadee UI",Tahoma,sans-serif;
-  background:
-    radial-gradient(60% 45% at 8% 100%,#c6f1d6 0%,rgba(198,241,214,0) 70%),
-    radial-gradient(55% 45% at 85% 95%,#f8d3ea 0%,rgba(248,211,234,0) 70%),
-    radial-gradient(50% 40% at 100% 5%,#eadff8 0%,rgba(234,223,248,0) 70%),
-    linear-gradient(180deg,#eef2ff,#f0eefb);
-  background-attachment:fixed}
-.brand{position:absolute;top:10px;left:12px;display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.02em}
+:root{--ink:#000;--mute:rgba(60,60,67,.62);--line:rgba(60,60,67,.18);--sep:rgba(60,60,67,.18);--glass2:rgba(255,255,255,.9);--fld:rgba(118,118,128,.12);--field:rgba(118,118,128,.12);--acc:#007aff;--acs:rgba(0,122,255,.14);--accink:#fff;--ok:#1c8a3a;--bad:#c62828;--warn:#b45f06;--sh:rgba(20,30,80,.14);--bg1:#eef2ff;--bg2:#efe6fb;--bg3:#f9d5ea;--bg4:#c9f2d8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{min-height:100%}
+body{margin:0;min-height:100vh;color:var(--ink);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue","Segoe UI",system-ui,"Noto Sans Thai",Tahoma,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;
+  background:radial-gradient(60vmax 60vmax at 8% 4%,var(--bg1),transparent 60%),radial-gradient(55vmax 55vmax at 95% 12%,var(--bg2),transparent 60%),radial-gradient(60vmax 60vmax at 80% 100%,var(--bg3),transparent 60%),radial-gradient(55vmax 55vmax at 5% 95%,var(--bg4),transparent 60%),var(--bg1);background-attachment:fixed}
+.brand{position:absolute;left:12px;top:6px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;letter-spacing:.02em;z-index:3}
 .brand small{font-weight:500;color:var(--mute);font-size:1em}
-.foot{position:fixed;right:16px;bottom:10px;font-size:11px;letter-spacing:.16em;color:#b9bec9;pointer-events:none}
-.shell{max-width:1000px;margin:56px auto 56px;padding:0 14px}
-.card{position:relative;border-radius:28px;padding:16px 16px 16px;background:linear-gradient(135deg,#c4e2fb 0%,#cbd5fb 100%);box-shadow:0 10px 30px rgba(120,140,220,.25)}
-.card h1{margin:0 0 6px 4px;font-size:1.35rem;font-weight:700;line-height:1.3}
-.cam{position:absolute;right:22px;top:10px}
-.tabs{display:flex;gap:2px;margin-top:6px;border-radius:22px 22px 0 0;background:rgba(255,255,255,.35);padding:0 0 0 0;overflow-x:auto}
-.tab{appearance:none;border:0;background:transparent;font:inherit;font-weight:500;color:#40506a;padding:10px 18px;border-radius:20px 20px 0 0;cursor:pointer;white-space:nowrap}
-.tab[aria-selected="true"]{background:#fff;color:var(--ink);font-weight:600}
+.foot{position:fixed;right:14px;bottom:10px;z-index:1;pointer-events:none;user-select:none;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);opacity:.55}
+.shell{max-width:860px;margin:0 auto;padding:50px 16px 60px}
+.card{position:relative;width:100%;margin:0 0 18px;padding:14px 17px 16px;border-radius:24px;background:linear-gradient(135deg,rgba(186,230,253,.85),rgba(199,215,254,.8));box-shadow:0 10px 34px var(--sh),inset 0 1px 0 rgba(255,255,255,.85)}
+.card h1{margin:0 0 5px 4px;font-size:clamp(17px,5vw,21px);line-height:30px;font-weight:700;letter-spacing:0}
+.bigc{position:absolute;right:20px;top:6px;width:84px;height:auto;z-index:3;filter:drop-shadow(0 6px 8px rgba(0,40,120,.3));pointer-events:none}
+.fold{position:relative;filter:drop-shadow(0 8px 18px var(--sh))}
+.fold::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.3);border-radius:26px}
+.tabs{position:relative;z-index:1;display:flex;overflow-x:auto;overflow-y:hidden}
+.tab{position:relative;z-index:1;flex:none;appearance:none;border:0;background:transparent;font:inherit;font-size:16px;font-weight:500;letter-spacing:inherit;color:#40506a;padding:9px 26px 6px 16px;border-radius:22px 22px 0 0;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--glass2);color:var(--ink);margin-right:22px}
+.tab:first-child[aria-selected="true"]{border-radius:22px 0 0 0}
+.tab[aria-selected="true"]::after{content:"";position:absolute;right:-22px;bottom:0;width:22px;height:22px;pointer-events:none;background:radial-gradient(circle at 100% 0,transparent 21px,var(--glass2) 22px)}
+.tab[aria-selected="true"]:not(:first-child){margin-left:22px}
+.tab[aria-selected="true"]:not(:first-child)::before{content:"";position:absolute;left:-22px;bottom:0;width:22px;height:22px;pointer-events:none;background:radial-gradient(circle at 0 0,transparent 21px,var(--glass2) 22px)}
 .tab:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
-.sheet{background:#fff;border-radius:24px;padding:14px 12px 16px;min-height:240px}
-.sheet[data-tab="0"]{border-top-left-radius:0}
+.sheet{position:relative;z-index:1;background:var(--glass2);border-radius:24px;padding:8px 11px 24px;min-height:240px}
+.sheet[data-tab="0"]{border-radius:0 24px 24px 24px}
 .pane[hidden]{display:none}
-.flow{display:flex;justify-content:flex-end;align-items:flex-start;gap:6px;padding:0 6px 8px}
-.flow .to{display:flex;flex-direction:column;align-items:center;font-size:9px;letter-spacing:.3em;color:#8a8f9a;margin-top:2px}
-.drop{border:1.5px dashed #c4c8d0;border-radius:24px;background:#ebebed;padding:36px 16px;text-align:center;cursor:pointer;transition:background .15s,border-color .15s}
-.drop:hover,.drop.over,.drop:focus-visible{background:#e4e9f7;border-color:var(--acc);outline:none}
-.drop .big{display:block;font-weight:600;font-size:.95rem;margin-top:8px}
-.drop .small{display:block;color:#8a8f9a;font-size:.72rem;margin-top:2px}
+.cvrow{display:flex;justify-content:flex-end;margin:0 0 14px}
+.conv{margin-left:auto;display:flex;align-items:center;gap:0}
+.conv>svg{width:40px;height:40px;flex:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.2))}
+.mid{position:relative;display:flex;align-items:center}
+.mrow{display:flex;align-items:center}
+.ln{display:block;flex:none;width:18px;height:1.5px;border-radius:2px}
+.ln.ll{background:linear-gradient(90deg,rgba(255,69,58,0),rgba(255,69,58,.75));margin-left:2px}
+.ln.rr{background:linear-gradient(90deg,rgba(255,69,58,.75),rgba(255,69,58,0));margin-right:2px}
+.cto{font-size:10px;font-weight:600;letter-spacing:.3em;padding-left:.3em;position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;line-height:1;white-space:nowrap;color:var(--mute)}
+.sw{flex:none;filter:drop-shadow(0 0 5px rgba(255,69,58,.55))}
+@keyframes swing{0%,100%{transform:rotate(0)}50%{transform:rotate(180deg)}}
+.spin{transform-box:view-box;transform-origin:15px 15px;animation:swing 2.4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.spin{animation:none}*{transition:none!important}}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;padding:20px 12px;border:1.5px dashed var(--sep);border-radius:22px;background:var(--fld);cursor:pointer;transition:.2s}
+.drop>svg{width:46px;height:46px;margin-bottom:8px;filter:drop-shadow(0 6px 10px rgba(0,60,160,.3))}
+.drop:hover,.drop.over,.drop:focus-visible{background:var(--acs);border-color:var(--acc);outline:none}
+.drop:active{transform:scale(.99)}
+.drop .big{display:block;font-weight:600;font-size:13.5px}
+.drop .small{display:block;color:var(--mute);font-size:11px}
 .info{margin-top:10px;color:var(--mute);font-size:.88rem;text-align:center}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:12px}
 label{display:block;font-size:.82rem;color:var(--mute)}
-input[type=text],input:not([type]),select{width:100%;margin-top:3px;padding:8px 12px;border:1px solid transparent;border-radius:12px;background:var(--field);color:var(--ink);font:inherit}
-input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
-.tbl{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:14px}
-table{width:100%;border-collapse:collapse;min-width:620px;table-layout:fixed}
+input[type=text],input:not([type]),select{width:100%;margin-top:3px;padding:10px 14px;border:0;border-radius:14px;background:var(--fld);color:var(--ink);font:inherit;font-size:15px;outline:none;transition:box-shadow .15s,background .15s}
+input[type=text]:focus,input:not([type]):focus,select:focus{background:var(--glass2);box-shadow:0 0 0 3px rgba(0,122,255,.4)}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.tbl{overflow:auto;max-height:55vh;border-radius:20px;background:var(--glass2);border:.5px solid var(--sep)}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:620px;table-layout:fixed}
 th:first-child,td:first-child{width:3.8em}
-th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);overflow-wrap:anywhere;font-size:.88rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:.5px solid var(--sep);overflow-wrap:anywhere;font-size:.88rem}
+tr:last-child td{border-bottom:0}
 th:nth-child(2),td:nth-child(2){width:36%}
-th{font-weight:600;color:var(--mute);font-size:.8rem;position:sticky;top:0;background:#f7f8fb}
+th{font-weight:500;color:var(--mute);font-size:.8rem;position:sticky;top:0;z-index:1;background:var(--glass2)}
 td.new{font-weight:600}
 td.bad,td.miss{color:var(--bad)}
 td.miss{font-weight:400}
 td.dup{color:var(--warn);font-weight:600}
 td.keep{color:var(--mute)}
 .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
-button.b{padding:9px 18px;border-radius:999px;border:1px solid var(--acc);background:var(--acc);color:var(--accink);font:inherit;font-weight:500;cursor:pointer}
-button.b.alt{background:#fff;color:var(--acc)}
+button.b{padding:10px 18px;border-radius:99px;border:1px solid var(--acc);background:var(--acc);color:var(--accink);font:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s,opacity .15s}
+button.b:active{transform:scale(.97);opacity:.92}
+button.b.alt{background:var(--acs);color:var(--acc);border-color:transparent}
 button.b:disabled{opacity:.4;cursor:not-allowed}
 #msg{color:var(--mute);min-height:1.5em;margin-top:10px;font-size:.9rem}
 #msg.bad{color:var(--bad)}#msg.ok{color:var(--ok)}
 details{margin-bottom:12px}
 summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
-@media (max-width:640px){.shell{margin-top:50px}.cam{transform:scale(.75);transform-origin:top right;right:14px}.card h1{font-size:1.1rem;max-width:70%}.tab{padding:9px 12px;font-size:.9rem}}
+@media (max-width:640px){.card h1{max-width:calc(100% - 96px)}.bigc{width:68px;right:14px}.tab{padding:9px 20px 6px 12px;font-size:15px}}
 </style>
 </head>
 <body>
@@ -73,18 +88,10 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
 
 <div class="shell">
 <div class="card">
-  <h1>Summary to report</h1>
-  <svg class="cam" width="66" height="72" viewBox="0 0 66 72" aria-hidden="true">
-    <defs><linearGradient id="cb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b7584"/><stop offset="1" stop-color="#454e5c"/></linearGradient>
-    <linearGradient id="cr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#fb7185"/></linearGradient></defs>
-    <rect x="25" y="36" width="15" height="30" rx="6" fill="#4b5563"/>
-    <rect x="2" y="2" width="62" height="42" rx="12" fill="url(#cb)"/>
-    <circle cx="23" cy="23" r="15" fill="#0e2a3a" stroke="#22c5d8" stroke-width="3.5"/>
-    <circle cx="23" cy="23" r="8" fill="#0b3b52"/><circle cx="19" cy="19" r="3" fill="#7be3f0" opacity=".8"/>
-    <rect x="42" y="8" width="17" height="17" rx="5" fill="url(#cr)"/>
-    <text x="50.5" y="20.5" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="Arial,sans-serif">IR</text>
-  </svg>
+  <h1>Summary+.IS2 to .IS2 Rename</h1>
+  <svg class="bigc" viewBox="0 0 84 76" aria-hidden="true"><defs><linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b94a3"/><stop offset="1" stop-color="#4b5563"/></linearGradient><linearGradient id="gs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><rect x="46" y="38" width="20" height="36" rx="6" fill="#4b5563"/><rect x="12" y="6" width="62" height="42" rx="9" fill="url(#gb)"/><circle cx="30" cy="29" r="19" fill="#2f3743"/><circle cx="30" cy="29" r="14" fill="#14b8c6"/><circle cx="30" cy="29" r="9" fill="#1e3a8a"/><circle cx="26" cy="25" r="3" fill="#fff" opacity=".6"/><rect x="50" y="11" width="21" height="22" rx="4" fill="#1f2937"/><rect x="52" y="13" width="17" height="18" rx="3" fill="url(#gs)"/><text x="60.5" y="26" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" font-family="Arial,sans-serif">IR</text></svg>
 
+  <div class="fold">
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="t0" aria-selected="true">เลือกไฟล์ Summary</button>
     <button class="tab" role="tab" id="t1" aria-selected="false">เลือกไฟล์ IS2</button>
@@ -92,24 +99,18 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
   </div>
 
   <div class="sheet" id="sheet" data-tab="0">
-    <div class="flow" aria-hidden="true">
-      <!-- Excel -->
+    <div class="cvrow" aria-hidden="true"><span class="conv">
       <svg width="46" height="46" viewBox="0 0 64 64"><defs><linearGradient id="ex" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4ad07f"/><stop offset="1" stop-color="#169c55"/></linearGradient></defs>
         <rect x="20" y="6" width="40" height="52" rx="6" fill="url(#ex)"/>
         <rect x="32" y="16" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="27" width="20" height="6" rx="2" fill="#fff" opacity=".85"/><rect x="32" y="38" width="20" height="6" rx="2" fill="#fff" opacity=".85"/>
         <rect x="4" y="16" width="32" height="34" rx="6" fill="#0f7a3f"/>
         <text x="20" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" font-family="Arial,sans-serif">X</text></svg>
-      <div class="to">
-        <svg width="42" height="30" viewBox="0 0 42 30"><line x1="0" y1="15" x2="42" y2="15" stroke="#ff9aa2" stroke-width="1.2"/><circle cx="21" cy="15" r="12" fill="#fff" stroke="#ff7a85" stroke-width="2"/>
-          <path d="M14.5 13a7 7 0 0 1 12-2.5M27.5 17a7 7 0 0 1-12 2.5" fill="none" stroke="#ff5c6c" stroke-width="2" stroke-linecap="round"/><path d="M27 7v4h-4M15 23v-4h4" fill="none" stroke="#ff5c6c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>TO</span>
-      </div>
-      <!-- IS2 -->
+      <span class="mid"><span class="mrow"><i class="ln ll"></i><svg class="sw" width="24" height="24" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="rgba(255,69,58,.12)" stroke="#ff453a" stroke-width="1.5"/><g class="spin" fill="none" stroke="#ff453a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12.5a6 6 0 0 0-10.3-2"/><path d="M21 8v4.5h-4.5"/><path d="M9.5 17.5a6 6 0 0 0 10.3 2"/><path d="M9 22v-4.5h4.5"/></g></svg><i class="ln rr"></i></span><b class="cto">TO</b></span>
       <svg width="46" height="46" viewBox="0 0 64 64"><defs><linearGradient id="th" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2b59ff"/><stop offset=".5" stop-color="#ffd23f"/><stop offset="1" stop-color="#ff4d4d"/></linearGradient></defs>
         <path d="M12 4h30l14 14v38a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#fff" stroke="#c7cdd8" stroke-width="2"/><path d="M42 4v14h14" fill="#e6eaf2" stroke="#c7cdd8" stroke-width="2"/>
         <rect x="16" y="24" width="32" height="20" rx="4" fill="url(#th)"/>
         <text x="32" y="55" text-anchor="middle" font-size="10" font-weight="700" fill="#2f6df6" font-family="Arial,sans-serif">IS2</text></svg>
-    </div>
+    </span></div>
 
     <!-- ขั้นที่ 1: Summary -->
     <div class="pane" id="p0">
@@ -161,6 +162,7 @@ summary{cursor:pointer;color:var(--mute);font-size:.88rem;margin-bottom:8px}
       </div>
       <div id="msg" role="status"></div>
     </div>
+  </div>
   </div>
 </div>
 </div>
